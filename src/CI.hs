@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TemplateHaskell #-}
 
-module CI ( isCI, getCI ) where
+module CI ( CI(..), isCI, getCI ) where
 
 import           CI.Types                   ( CI )
 import qualified CI.Types                   as CI

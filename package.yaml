@@ -6,9 +6,6 @@ author:              "Ajeet D'Souza"
 maintainer:          "build@hasura.io"
 copyright:           "2019 Hasura Inc."
 
-ghc-options:
-- -Wall
-
 extra-source-files:
 - README.md
 
@@ -25,5 +22,9 @@ dependencies:
 - unordered-containers
 - wreq
 
+ghc-options:
+- -Wall
+
 library:
+  exposed-modules: CI
   source-dirs: src
