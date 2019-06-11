@@ -6,7 +6,13 @@
 
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 
-module CI.Types where
+module CI.Types
+    ( CI(..)
+    , Vendor(..)
+    , VendorEnv(..)
+    , EnvVarName(..)
+    , EnvVarValue(..)
+    ) where
 
 import qualified Data.Aeson                 as Aeson
 import qualified Data.Aeson.Casing          as Aeson
@@ -86,10 +92,13 @@ instance Aeson.ToJSON VendorEnv where
         VendorEnvList list -> Aeson.toJSON list
         VendorEnvObject object -> Aeson.toJSON object
 
-newtype VendorName = VendorName {unVendorName :: Text} deriving (Eq, Show, Aeson.FromJSON, Aeson.ToJSON, TH.Lift)
+newtype VendorName = VendorName { unVendorName :: Text }
+    deriving ( Eq, Show, Aeson.FromJSON, Aeson.ToJSON, TH.Lift )
 
-data Vendor =
-    Vendor { vendorName :: !VendorName, vendorConstant :: !CI, vendorEnv :: !VendorEnv }
+data Vendor = Vendor { vendorName     :: !VendorName
+                     , vendorConstant :: !CI
+                     , vendorEnv      :: !VendorEnv
+                     }
     deriving ( Eq, Show, TH.Lift )
 
 $(Aeson.deriveJSON (Aeson.aesonPrefix Aeson.snakeCase) ''Vendor)
