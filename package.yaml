@@ -15,12 +15,11 @@ dependencies:
 - base >= 4.7 && < 5
 - aeson
 - aeson-casing
-- lens
+- hashable
 - template-haskell
 - th-lift-instances
 - text
 - unordered-containers
-- wreq
 
 ghc-options:
 - -Wall
