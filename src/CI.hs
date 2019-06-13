@@ -1,17 +1,25 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TemplateHaskell   #-}
 
-module CI (Types.CI(..), isCI, getCI) where
+module CI
+  ( Types.CI(..)
+  , isCI
+  , getCI
+  ) where
 
-import           CI.TH               (getVendors)
-import qualified CI.Types            as Types
 import           Control.Arrow       ((***))
 import           Data.Bool           (bool)
 import           Data.Foldable       (find)
-import qualified Data.HashMap.Strict as HashMap
 import           Data.Maybe          (isJust)
-import qualified Data.Text           as T
 import           System.Environment  (getEnvironment)
+
+import           CI.TH               (getVendors)
+
+import qualified Data.HashMap.Strict as HashMap
+import qualified Data.Text           as T
+
+import qualified CI.Types            as Types
+
 
 vendors :: [Types.Vendor]
 vendors = $(getVendors)

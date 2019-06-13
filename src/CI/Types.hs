@@ -7,22 +7,24 @@
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 
 module CI.Types
-    ( CI(..)
-    , Vendor(..)
-    , VendorEnv(..)
-    , EnvVarName(..)
-    , EnvVarValue(..)) where
+  ( CI(..)
+  , Vendor(..)
+  , VendorEnv(..)
+  , EnvVarName(..)
+  , EnvVarValue(..)) where
+
+import           Data.Hashable              (Hashable)
+import           Data.HashMap.Strict        (HashMap)
+import           Data.Text                  (Text)
+import           Instances.TH.Lift          ()
 
 import qualified Data.Aeson                 as Aeson
 import qualified Data.Aeson.Casing          as Aeson
 import qualified Data.Aeson.TH              as Aeson
-import           Data.Hashable              (Hashable)
-import           Data.HashMap.Strict        (HashMap)
 import qualified Data.HashMap.Strict        as HashMap
-import           Data.Text                  (Text)
 import qualified Data.Text                  as T
-import           Instances.TH.Lift          ()
 import qualified Language.Haskell.TH.Syntax as TH
+
 
 data CI =
     CI_APPVEYOR -- http://www.appveyor.com/
@@ -85,7 +87,7 @@ instance Aeson.FromJSON VendorEnv where
 
 instance Aeson.ToJSON VendorEnv where
   toJSON val = case val of
-    VendorEnvString key    -> Aeson.toJSON key
+    VendorEnvString name   -> Aeson.toJSON name
     VendorEnvList list     -> Aeson.toJSON list
     VendorEnvObject object -> Aeson.toJSON object
 

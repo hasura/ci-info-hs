@@ -1,9 +1,13 @@
-module CI.TH (getVendors) where
+module CI.TH
+  ( getVendors
+  ) where
 
-import qualified CI.Types                   as Types
 import qualified Data.Aeson                 as Aeson
 import qualified Language.Haskell.TH        as TH
 import qualified Language.Haskell.TH.Syntax as TH
+
+import qualified CI.Types                   as Types
+
 
 getVendors :: TH.Q TH.Exp
 getVendors = TH.runIO readVendors >>= TH.lift
