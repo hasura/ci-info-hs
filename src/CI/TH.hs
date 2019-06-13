@@ -1,9 +1,7 @@
-module CI.TH ( getVendors ) where
+module CI.TH (getVendors) where
 
 import qualified CI.Types                   as Types
-
 import qualified Data.Aeson                 as Aeson
-
 import qualified Language.Haskell.TH        as TH
 import qualified Language.Haskell.TH.Syntax as TH
 
@@ -14,7 +12,7 @@ getVendors = TH.runIO readVendors >>= TH.lift
 
     readVendors :: IO [Types.Vendor]
     readVendors = do
-        vendors <- Aeson.eitherDecodeFileStrict' vendorsPath
-        case vendors of
-            Left e -> fail $ "parsing vendors.json failed: " <> e
-            Right v -> return v
+      vendors <- Aeson.eitherDecodeFileStrict' vendorsPath
+      case vendors of
+        Left e  -> fail $ "parsing vendors.json failed: " <> e
+        Right v -> return v
