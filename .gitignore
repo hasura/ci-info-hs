@@ -1,4 +1,3 @@
-ci-info.cabal
 dist
 dist-*
 cabal-dev
