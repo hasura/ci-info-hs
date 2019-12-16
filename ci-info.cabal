@@ -1,0 +1,44 @@
+-- This file has been generated from package.yaml by hpack version 0.9.1.
+--
+-- see: https://github.com/sol/hpack
+
+name:           ci-info
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/hasura/ci-info-hs#readme>
+homepage:       https://github.com/hasura/ci-info-hs#readme
+bug-reports:    https://github.com/hasura/ci-info-hs/issues
+author:         Ajeet D'Souza
+maintainer:     build@hasura.io
+copyright:      2019 Hasura Inc.
+license:        MIT
+license-file:   LICENSE
+build-type:     Simple
+cabal-version:  >= 1.10
+
+extra-source-files:
+    README.md
+
+source-repository head
+  type: git
+  location: https://github.com/hasura/ci-info-hs
+
+library
+  hs-source-dirs:
+      src
+  ghc-options: -Wall -Wincomplete-uni-patterns -Wincomplete-record-updates -Wcompat -Widentities -Wredundant-constraints -Wmissing-export-lists -Wpartial-fields
+  build-depends:
+      base >= 4.7 && < 5
+    , aeson
+    , aeson-casing
+    , hashable
+    , template-haskell
+    , th-lift-instances
+    , text
+    , unordered-containers
+  exposed-modules:
+      CI
+  other-modules:
+      CI.TH
+      CI.Types
+      Paths_ci_info
+  default-language: Haskell2010
