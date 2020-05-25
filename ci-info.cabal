@@ -40,5 +40,4 @@ library
   other-modules:
       CI.TH
       CI.Types
-      Paths_ci_info
   default-language: Haskell2010
