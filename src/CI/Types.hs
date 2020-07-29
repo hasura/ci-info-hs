@@ -62,8 +62,8 @@ $(Aeson.deriveJSON
   Aeson.defaultOptions { Aeson.constructorTagModifier = drop $ T.length "CI_" }
   ''CI)
 
-instance (TH.Lift k, TH.Lift v) => TH.Lift (HashMap k v) where
-  lift hashMap = [|HashMap.fromList $(TH.lift $ HashMap.toList hashMap)|]
+instance (TH.Lift k, TH.Lift v, Eq k, Hashable k) => TH.Lift (HashMap k v) where
+  liftTyped hashMap = [||HashMap.fromList $$(TH.liftTyped $ HashMap.toList hashMap)||]
 
 newtype EnvVarName = EnvVarName { unEnvVarName :: Text }
   deriving (Eq, Hashable, Show, Aeson.FromJSON, Aeson.FromJSONKey, Aeson.ToJSON
