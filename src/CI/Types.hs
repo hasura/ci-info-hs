@@ -4,8 +4,6 @@
 {-# LANGUAGE OverloadedStrings          #-}
 {-# LANGUAGE TemplateHaskell            #-}
 
-{-# OPTIONS_GHC -fno-warn-orphans #-}
-
 module CI.Types
   ( CI(..)
   , Vendor(..)
@@ -62,9 +60,6 @@ $(Aeson.deriveJSON
   Aeson.defaultOptions { Aeson.constructorTagModifier = drop $ T.length "CI_" }
   ''CI)
 
-instance (TH.Lift k, TH.Lift v, Eq k, Hashable k) => TH.Lift (HashMap k v) where
-  liftTyped hashMap = [||HashMap.fromList $$(TH.liftTyped $ HashMap.toList hashMap)||]
-
 newtype EnvVarName = EnvVarName { unEnvVarName :: Text }
   deriving (Eq, Hashable, Show, Aeson.FromJSON, Aeson.FromJSONKey, Aeson.ToJSON
           , Aeson.ToJSONKey, TH.Lift)
@@ -75,7 +70,13 @@ newtype EnvVarValue = EnvVarValue { unEnvVarValue :: Text }
 data VendorEnv = VendorEnvString !EnvVarName
                | VendorEnvList ![EnvVarName]
                | VendorEnvObject !(HashMap EnvVarName EnvVarValue)
-  deriving (Eq, Show, TH.Lift)
+  deriving (Eq, Show)
+
+instance TH.Lift VendorEnv where
+  liftTyped (VendorEnvString n) = [||VendorEnvString $$(TH.liftTyped n )||]
+  liftTyped (VendorEnvList  ns) = [||VendorEnvList   $$(TH.liftTyped ns)||]
+  liftTyped (VendorEnvObject m) =
+    [||VendorEnvObject $ HashMap.fromList $$(TH.liftTyped $ HashMap.toList m)||]
 
 instance Aeson.FromJSON VendorEnv where
   parseJSON val = case val of
